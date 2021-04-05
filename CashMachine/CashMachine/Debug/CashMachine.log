@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(68,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(190,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  CashMachine.vcxproj -> C:\Users\User\coding\Cash-Machine\CashMachine\Debug\CashMachine.exe
