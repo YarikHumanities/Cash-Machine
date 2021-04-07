@@ -3,6 +3,19 @@
 #include <iomanip>
 #include <ctime>
 using namespace std;
+class Check {
+public:
+    string list_of_names;
+    int sum;
+    Check() {
+        list_of_names = "";
+        sum = 0;
+    }
+    void print_recipe(){
+        cout << "Goods: " << list_of_names << endl;
+        cout << "Sum: " << sum << endl;
+    }
+};
 class Pair {
 public:
     string Key;
@@ -143,7 +156,7 @@ public:
             resize();
         }
     }
-    void Search(string key)
+    void Search(string key, Check& recipe, int n)
     {
         bool flag = false;
         int hash_val = HashFunc(key);
@@ -152,32 +165,29 @@ public:
         {
             if (entry->data.Key == key)
             {
-                cout << "============================================" << endl;
-                
-                cout << "Your good: " << entry->data.Name << endl;
-                cout << "Price: "<< entry->data.Price << endl;
+                if (n > entry->data.Quant) {
+                    cout << "There is a lack of " << entry->data.Name << "s" << " in quantity of " << n - entry->data.Quant << endl;
+                    return;
+                }
+               
                 if (entry->data.Quant < 1) {
                     cout << "But the good is absent" << endl;
                 }
                 else {
-                    cout << "Quant: " << entry->data.Quant << endl;
+                    if (n > 1) {
+                        string temp_n = to_string(n);
+                        recipe.list_of_names += entry->data.Name + " (x"+temp_n+") ";
+                    }
+                    else {
+                        recipe.list_of_names += entry->data.Name + " ";
+                    }
+                    int temp_sum;
+                    temp_sum = stoi(entry->data.Price)*n;
+                    recipe.sum += temp_sum;
                 }
-                int code [10];
-                for (int i = 0; i < 10; i++)
-                {
-                    code[i] = rand() % 10;
-                }
-                cout << "Code for payment: " << endl;
-                cout << "#";
-                for (int i = 0; i < 10; i++)
-                {
-                    cout << code[i];
-                }
-                cout << endl;
-                cout << "============================================" << endl;
-                cout << endl;
+               
                 flag = true;
-                entry->data.Quant = entry->data.Quant - 1;
+                entry->data.Quant = entry->data.Quant - n;
             }
             entry = entry->next;
         }
@@ -190,7 +200,7 @@ public:
 int main() {
     srand(time(NULL));
     HashTable machine;
-    machine.insert("0001", "Apple", "3", 5);
+    machine.insert("0001", "Apple", "3", 3);
     machine.insert("0002", "Grape", "4", 6);
     machine.insert("0003", "Lemon", "5", 7);
     machine.insert("0004", "Cheese", "6", 8);
@@ -199,11 +209,38 @@ int main() {
     machine.insert("0007", "Test2", "250", 10);
     machine.insert("0008", "Test3", "310", 115);
     machine.insert("0009", "Test4", "43", 98);
-    
     while (true) {
-        cout << "Enter your bar: ";
-        string bar;
-        cin >> bar;
-        machine.Search(bar);
+        cout << "Hello customer!" << endl;
+        Check recipe;
+        while (true) {
+            cout << "Enter your bar (or enter Exit): ";
+            string bar;
+            cin >> bar;
+            if (bar == "Exit") {
+                break;
+            }
+            int n;
+            cout << "Enter quantity of a good: ";
+            cin >> n;
+            cin.ignore();
+            
+            machine.Search(bar, recipe, n);
+            
+        }
+        cout << "=========================" << endl;
+        recipe.print_recipe();
+        int code[10];
+        for (int i = 0; i < 10; i++)
+        {
+            code[i] = rand() % 10;
+        }
+        cout << "Code for payment: " << endl;
+        cout << "#";
+        for (int i = 0; i < 10; i++)
+        {
+            cout << code[i];
+        }
+        cout << endl;
+        cout << "=========================" << endl;
     }
 }
