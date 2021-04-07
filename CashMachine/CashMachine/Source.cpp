@@ -2,6 +2,7 @@
 #include <string>
 #include <iomanip>
 #include <ctime>
+#include <fstream>
 using namespace std;
 class Check {
 public:
@@ -199,8 +200,38 @@ public:
 };
 int main() {
     srand(time(NULL));
+    ifstream inFile;
+    string path = "G:/lab rep/Cash-Machine/CashMachine/CashMachine/Doc.txt";
     HashTable machine;
-    machine.insert("0001", "Apple", "3", 3);
+    inFile.open(path);
+    if (!inFile.is_open()) {
+        std::cout << "Cannot open the doc" << std::endl;
+    }
+    else
+    {
+        std::cout << "Doc is opened" << std::endl;
+        while (!inFile.eof())
+        {
+            string str;
+            getline(inFile, str);
+            string bar;
+            string name;
+            string price;
+            int count;
+            bar= string(str, str.find("barcode:")+8, str.find("name")-1 -str.find("barcode:")-8);
+            name= string(str, str.find("name:") + 5, str.find("price:") - 1 - str.find("name:")-5);
+            price= string(str, str.find("price:") + 6, str.find("quant:") - 1 - str.find("price:") - 6);
+            count = stoi(string(str, str.find("quant:") + 6, str.size() - 1 - str.find("quant:")));
+
+            //cout << str.find("name:") << endl;
+            //cout << str<<endl;
+            /*cout << "Bar= " << bar <<endl;
+            cout << "Name= " << name << endl;
+            cout << "Price= " << price <<endl;*/
+            machine.insert(bar,name, price, count);
+        }
+    }
+   /* machine.insert("0001", "Apple", "3", 3);
     machine.insert("0002", "Grape", "4", 6);
     machine.insert("0003", "Lemon", "5", 7);
     machine.insert("0004", "Cheese", "6", 8);
@@ -208,7 +239,7 @@ int main() {
     machine.insert("0006", "Test1", "10", 10);
     machine.insert("0007", "Test2", "250", 10);
     machine.insert("0008", "Test3", "310", 115);
-    machine.insert("0009", "Test4", "43", 98);
+    machine.insert("0009", "Test4", "43", 98);*/
     while (true) {
         cout << "Hello customer!" << endl;
         Check recipe;

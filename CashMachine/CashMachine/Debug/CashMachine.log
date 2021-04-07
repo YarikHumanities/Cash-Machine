@@ -1,5 +1,5 @@
 ﻿  Source.cpp
-C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(82,21): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(94,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(201,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  CashMachine.vcxproj -> C:\Users\User\coding\Cash-Machine\CashMachine\Debug\CashMachine.exe
+G:\lab rep\Cash-Machine\CashMachine\CashMachine\Source.cpp(83,21): warning C4305: инициализация: усечение из "double" в "float"
+G:\lab rep\Cash-Machine\CashMachine\CashMachine\Source.cpp(95,27): warning C4018: <: несоответствие типов со знаком и без знака
+G:\lab rep\Cash-Machine\CashMachine\CashMachine\Source.cpp(202,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  CashMachine.vcxproj -> G:\lab rep\Cash-Machine\CashMachine\Debug\CashMachine.exe
