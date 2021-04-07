@@ -5,11 +5,12 @@
 using namespace std;
 class Pair {
 public:
-    int Key;
+    string Key;
     string Name;
     string Price;
     int Quant;
-    void set_Key_Name(int a, string b, string c, int d) {
+    void set_Key_Name(string a, string b, string c, int d) 
+    {
         Key = a;
         Name = b;
         Price = c;
@@ -64,7 +65,7 @@ class HashTable {
 private:
     Node** table;
 public:
-    int tableSize = 100;
+    int tableSize = 10;
     float threshold = 0.8;
     int size = 0;
     int maxSize = 0;
@@ -75,14 +76,14 @@ public:
             table[i] = NULL;
         }
     }
-    int HashFunc(int key) {
-        /*int sum = 0;
+    int HashFunc(string key) {
+        int sum = 0;
         for (int i = 0; i < key.size(); i++)
         {
             sum += key[i];
         }
-        return sum % key.size();*/
-        return key;
+        return sum % key.size();
+       // return key;
     }
     float setThreshold(float threshold) {
         this->threshold = threshold;
@@ -114,7 +115,7 @@ public:
         }
         delete[] OldTable;
     }
-    void insert(int key, string Name, string Price, int Quant) {
+    void insert(string key, string Name, string Price, int Quant) {
         Pair aa;
         aa.set_Key_Name(key, Name, Price, Quant);
         int hash_val = HashFunc(key);
@@ -142,7 +143,7 @@ public:
             resize();
         }
     }
-    void Search(int key)
+    void Search(string key)
     {
         bool flag = false;
         int hash_val = HashFunc(key);
@@ -189,16 +190,19 @@ public:
 int main() {
     srand(time(NULL));
     HashTable machine;
-    machine.insert(1, "Apple", "3", 5);
-    machine.insert(2, "Grape", "4", 6);
-    machine.insert(3, "Lemon", "5", 7);
-    machine.insert(4, "Cheese", "6", 8);
-    machine.insert(10, "Test", "100", 100);
-    
+    machine.insert("0001", "Apple", "3", 5);
+    machine.insert("0002", "Grape", "4", 6);
+    machine.insert("0003", "Lemon", "5", 7);
+    machine.insert("0004", "Cheese", "6", 8);
+    machine.insert("0005", "Test", "100", 100);
+    machine.insert("0006", "Test1", "10", 10);
+    machine.insert("0007", "Test2", "250", 10);
+    machine.insert("0008", "Test3", "310", 115);
+    machine.insert("0009", "Test4", "43", 98);
     
     while (true) {
         cout << "Enter your bar: ";
-        int bar;
+        string bar;
         cin >> bar;
         machine.Search(bar);
     }
