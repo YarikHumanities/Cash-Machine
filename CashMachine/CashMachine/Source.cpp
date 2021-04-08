@@ -201,7 +201,7 @@ public:
 int main() {
     srand(time(NULL));
     ifstream inFile;
-    string path = "G:/lab rep/Cash-Machine/CashMachine/CashMachine/Doc.txt";
+    string path = "Doc.txt";
     HashTable machine;
     inFile.open(path);
     if (!inFile.is_open()) {
@@ -209,7 +209,7 @@ int main() {
     }
     else
     {
-        std::cout << "Doc is opened" << std::endl;
+        //std::cout << "Doc is opened" << std::endl;
         while (!inFile.eof())
         {
             string str;
@@ -222,56 +222,48 @@ int main() {
             name= string(str, str.find("name:") + 5, str.find("price:") - 1 - str.find("name:")-5);
             price= string(str, str.find("price:") + 6, str.find("quant:") - 1 - str.find("price:") - 6);
             count = stoi(string(str, str.find("quant:") + 6, str.size() - 1 - str.find("quant:")));
-
-            //cout << str.find("name:") << endl;
-            //cout << str<<endl;
-            /*cout << "Bar= " << bar <<endl;
-            cout << "Name= " << name << endl;
-            cout << "Price= " << price <<endl;*/
             machine.insert(bar,name, price, count);
         }
-    }
-   /* machine.insert("0001", "Apple", "3", 3);
-    machine.insert("0002", "Grape", "4", 6);
-    machine.insert("0003", "Lemon", "5", 7);
-    machine.insert("0004", "Cheese", "6", 8);
-    machine.insert("0005", "Test", "100", 100);
-    machine.insert("0006", "Test1", "10", 10);
-    machine.insert("0007", "Test2", "250", 10);
-    machine.insert("0008", "Test3", "310", 115);
-    machine.insert("0009", "Test4", "43", 98);*/
-    while (true) {
-        cout << "Hello customer!" << endl;
-        Check recipe;
         while (true) {
-            cout << "Enter your bar (or enter Exit): ";
-            string bar;
-            cin >> bar;
-            if (bar == "Exit") {
-                break;
+            cout << "Hello customer!" << endl;
+            Check recipe;
+            while (true) {
+                cout << "Enter your bar (or enter Exit): ";
+                string bar;
+                cin >> bar;
+                if (bar == "Exit" || bar == "exit") {
+                    break;
+                }
+                int n;
+                cout << "Enter quantity of a good: ";
+                cin >> n;
+                if (n == 0)
+                {
+                    cout << "Quantity cannot be zero! Repeat!" << endl<<"Quantity of a good: ";
+                    cin >> n;
+                }
+                cin.ignore();
+
+                machine.Search(bar, recipe, n);
+
             }
-            int n;
-            cout << "Enter quantity of a good: ";
-            cin >> n;
-            cin.ignore();
+            cout << "=========================" << endl;
             
-            machine.Search(bar, recipe, n);
-            
+            recipe.print_recipe();
+            int code[10];
+            for (int i = 0; i < 10; i++)
+            {
+                code[i] = rand() % 10;
+            }
+            cout << "Code for payment: " << endl;
+            cout << "#";
+            for (int i = 0; i < 10; i++)
+            {
+                cout << code[i];
+            }
+            cout << endl;
+            cout << "=========================" << endl;
         }
-        cout << "=========================" << endl;
-        recipe.print_recipe();
-        int code[10];
-        for (int i = 0; i < 10; i++)
-        {
-            code[i] = rand() % 10;
-        }
-        cout << "Code for payment: " << endl;
-        cout << "#";
-        for (int i = 0; i < 10; i++)
-        {
-            cout << code[i];
-        }
-        cout << endl;
-        cout << "=========================" << endl;
     }
+    return 0;
 }
