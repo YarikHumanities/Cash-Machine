@@ -19,12 +19,6 @@ int HashTable::HashFunc(string key)
     return sum % key.size();
 }
 
-//float HashTable::setThreshold(float threshold)
-//{
-//    this->threshold = threshold;
-//    maxSize = (int)(tableSize * threshold);
-//}
-
 void HashTable::resize()
 {
     int OldTableSize = tableSize;
@@ -33,9 +27,7 @@ void HashTable::resize()
     Node** OldTable = table;
     table = new Node * [tableSize];
     for (int i = 0; i < tableSize; i++)
-    {
         table[i] = NULL;
-    }
     size = 0;
     for (int hash = 0; hash < OldTableSize; hash++)
     {
@@ -67,13 +59,13 @@ void HashTable::insert(string key, string Name, string Price, int Quant) {
     if (entry == NULL) 
     {
         entry = new Node(aa);
-        if (prev == NULL) {
+        if (prev == NULL) 
+        {
             table[hash_val] = entry;
             size++;
         }
-        else {
+        else
             prev->next = entry;
-        }
     }
     else 
     {
@@ -81,10 +73,9 @@ void HashTable::insert(string key, string Name, string Price, int Quant) {
         size++;
     }
     if (size >= maxSize) 
-    {
         resize();
-    }
 }
+
 
 
 void HashTable::Search(string key, Check& receipt, int n)
@@ -96,20 +87,7 @@ void HashTable::Search(string key, Check& receipt, int n)
     {
         if (entry->data.Key == key)
         {
-            if (n > entry->data.Quant)
-            {
-                cout << "There is a lack of " << entry->data.Name << "s" << " in quantity of " << n - entry->data.Quant << endl;
-                return;
-            }
-            else
-            {
-                string price = entry->data.Price;
-                if (entry->data.Quant < 1)
-                    cout << "But the good is absent" << endl;
-                else
-                    checkingQuant(n, price, receipt, entry);
-            }
-
+            checkForAvailability(n, receipt, entry);
             flag = true;
             entry->data.Quant = entry->data.Quant - n;
         }
@@ -120,7 +98,21 @@ void HashTable::Search(string key, Check& receipt, int n)
 }
 
 
-void HashTable::checkingQuant(int numOfProduct, string price,Check& receipt, Node*entry)
+void HashTable::checkForAvailability(int n, Check& receipt, Node* entry)
+{
+    if (n > entry->data.Quant)
+        cout << "There is a lack of " << entry->data.Name << "s" << " in quantity of " << n - entry->data.Quant << endl;
+    else
+    {
+        string price = entry->data.Price;
+        if (entry->data.Quant < 1)
+            cout << "But the good is absent" << endl;
+        else
+            checkingQuant(n, price, receipt, entry);
+    }
+}
+
+void HashTable::checkingQuant(int numOfProduct, string price, Check& receipt, Node* entry)
 {
     if (numOfProduct > 1)
     {
