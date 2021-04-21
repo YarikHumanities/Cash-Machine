@@ -1,5 +1,9 @@
-﻿  Source.cpp
-C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(83,21): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(95,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User\coding\Cash-Machine\CashMachine\CashMachine\Source.cpp(202,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  CashMachine.vcxproj -> C:\Users\User\coding\Cash-Machine\CashMachine\Debug\CashMachine.exe
+﻿  Check.cpp
+  HashTable.cpp
+C:\Study\КПІ\Cash-Machine\CashMachine\CashMachine\HashTable.h(16,21): warning C4305: инициализация: усечение из "double" в "float"
+C:\Study\КПІ\Cash-Machine\CashMachine\CashMachine\HashTable.cpp(15,23): warning C4018: <: несоответствие типов со знаком и без знака
+  Source.cpp
+C:\Study\КПІ\Cash-Machine\CashMachine\CashMachine\HashTable.h(16,21): warning C4305: инициализация: усечение из "double" в "float"
+C:\Study\КПІ\Cash-Machine\CashMachine\CashMachine\Source.cpp(86,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Создание кода...
+  CashMachine.vcxproj -> C:\Study\КПІ\Cash-Machine\CashMachine\Debug\CashMachine.exe

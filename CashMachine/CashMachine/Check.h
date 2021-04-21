@@ -10,5 +10,5 @@ public:
     string list_of_names;
     int sum;
     Check();
-    void print_recipe();
+    void print_receipt();
 };

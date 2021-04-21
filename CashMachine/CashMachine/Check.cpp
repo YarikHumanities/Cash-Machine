@@ -6,8 +6,9 @@ Check::Check()
     sum = 0;
 }
 
-void Check::print_recipe()
+void Check::print_receipt()
 {
-    cout << "Goods: " << list_of_names << endl;
-    cout << "Sum: " << sum << endl;
+    cout << "Check:\n";
+    cout << list_of_names;
+    cout << "Sum\t" << sum << endl;
 }

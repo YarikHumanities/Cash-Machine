@@ -19,11 +19,11 @@ int HashTable::HashFunc(string key)
     return sum % key.size();
 }
 
-float HashTable::setThreshold(float threshold)
-{
-    this->threshold = threshold;
-    maxSize = (int)(tableSize * threshold);
-}
+//float HashTable::setThreshold(float threshold)
+//{
+//    this->threshold = threshold;
+//    maxSize = (int)(tableSize * threshold);
+//}
 
 void HashTable::resize()
 {
@@ -87,7 +87,7 @@ void HashTable::insert(string key, string Name, string Price, int Quant) {
 }
 
 
-void HashTable::Search(string key, Check& recipe, int n)
+void HashTable::Search(string key, Check& receipt, int n)
 {
     bool flag = false;
     int hash_val = HashFunc(key);
@@ -96,25 +96,18 @@ void HashTable::Search(string key, Check& recipe, int n)
     {
         if (entry->data.Key == key)
         {
-            if (n > entry->data.Quant) {
+            if (n > entry->data.Quant)
+            {
                 cout << "There is a lack of " << entry->data.Name << "s" << " in quantity of " << n - entry->data.Quant << endl;
                 return;
             }
-
-            if (entry->data.Quant < 1) {
-                cout << "But the good is absent" << endl;
-            }
-            else {
-                if (n > 1) {
-                    string temp_n = to_string(n);
-                    recipe.list_of_names += entry->data.Name + " (x" + temp_n + ") ";
-                }
-                else {
-                    recipe.list_of_names += entry->data.Name + " ";
-                }
-                int temp_sum;
-                temp_sum = stoi(entry->data.Price) * n;
-                recipe.sum += temp_sum;
+            else
+            {
+                string price = entry->data.Price;
+                if (entry->data.Quant < 1)
+                    cout << "But the good is absent" << endl;
+                else
+                    checkingQuant(n, price, receipt, entry);
             }
 
             flag = true;
@@ -123,7 +116,18 @@ void HashTable::Search(string key, Check& recipe, int n)
         entry = entry->next;
     }
     if (!flag)
-    {
         cout << "There isn't such a good in our supermarket" << endl;
+}
+
+
+void HashTable::checkingQuant(int numOfProduct, string price,Check& receipt, Node*entry)
+{
+    if (numOfProduct > 1)
+    {
+        string priceNn = to_string(stoi(price) * numOfProduct);
+        receipt.list_of_names += entry->data.Name + "\n" + to_string(numOfProduct) + "x" + price + "=\t" + priceNn + "\n";
     }
+    else
+        receipt.list_of_names += entry->data.Name + "\t" + price + "\n";
+    receipt.sum += (stoi(price) * numOfProduct);
 }

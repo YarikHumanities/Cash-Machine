@@ -9,16 +9,57 @@
 #include "Check.h"
 using namespace std;
 
-
-int main() {
-    srand(time(NULL));
-    ifstream inFile;
-    string path = "Doc.txt";
-    HashTable machine;
-    inFile.open(path);
-    if (!inFile.is_open()) {
-        std::cout << "Cannot open the doc" << std::endl;
+void printCodeForCheck()
+{
+    int code[10];
+    for (int i = 0; i < 10; i++)
+    {
+        code[i] = rand() % 10;
     }
+    cout << "Code for payment: " << endl;
+    cout << "#";
+    for (int i = 0; i < 10; i++)
+    {
+        cout << code[i];
+    }
+    cout << endl;
+    cout << "=========================" << endl;
+}
+
+void interface(HashTable& CashMachine)
+{
+    while (true) {
+        cout << "Hello customer!" << endl;
+        Check receipt;
+        while (true) {
+            cout << "Enter your bar (or enter Exit): ";
+            string bar;
+            cin >> bar;
+            if (bar == "Exit" || bar == "exit")
+                break;
+            int n;
+            cout << "Enter quantity of a good: ";
+            cin >> n;
+            if (n == 0)
+            {
+                cout << "Quantity cannot be zero! Repeat!" << endl << "Quantity of a good: ";
+                cin >> n;
+            }
+            cin.ignore();
+            CashMachine.Search(bar, receipt, n);
+        }
+        cout << "=========================" << endl;
+        receipt.print_receipt();
+        printCodeForCheck();
+    }
+}
+
+void fileWork(string fileName, HashTable& CashMachine)
+{
+    ifstream inFile;
+    inFile.open(fileName);
+    if (!inFile.is_open())
+        std::cout << "Cannot open the doc" << std::endl;
     else
     {
         while (!inFile.eof())
@@ -29,52 +70,23 @@ int main() {
             string name;
             string price;
             int count;
-            bar= string(str, str.find("barcode:")+8, str.find("name")-1 -str.find("barcode:")-8);
-            name= string(str, str.find("name:") + 5, str.find("price:") - 1 - str.find("name:")-5);
-            price= string(str, str.find("price:") + 6, str.find("quant:") - 1 - str.find("price:") - 6);
+            bar = string(str, str.find("barcode:") + 8, str.find("name") - 1 - str.find("barcode:") - 8);
+            name = string(str, str.find("name:") + 5, str.find("price:") - 1 - str.find("name:") - 5);
+            price = string(str, str.find("price:") + 6, str.find("quant:") - 1 - str.find("price:") - 6);
             count = stoi(string(str, str.find("quant:") + 6, str.size() - 1 - str.find("quant:")));
-            machine.insert(bar,name, price, count);
+            CashMachine.insert(bar, name, price, count);
         }
-        while (true) {
-            cout << "Hello customer!" << endl;
-            Check recipe;
-            while (true) {
-                cout << "Enter your bar (or enter Exit): ";
-                string bar;
-                cin >> bar;
-                if (bar == "Exit" || bar == "exit") {
-                    break;
-                }
-                int n;
-                cout << "Enter quantity of a good: ";
-                cin >> n;
-                if (n == 0)
-                {
-                    cout << "Quantity cannot be zero! Repeat!" << endl<<"Quantity of a good: ";
-                    cin >> n;
-                }
-                cin.ignore();
-
-                machine.Search(bar, recipe, n);
-
-            }
-            cout << "=========================" << endl;
-            
-            recipe.print_recipe();
-            int code[10];
-            for (int i = 0; i < 10; i++)
-            {
-                code[i] = rand() % 10;
-            }
-            cout << "Code for payment: " << endl;
-            cout << "#";
-            for (int i = 0; i < 10; i++)
-            {
-                cout << code[i];
-            }
-            cout << endl;
-            cout << "=========================" << endl;
-        }
+        interface(CashMachine);
     }
+    inFile.close();
+}
+
+
+int main() {
+    srand(time(NULL));
+    ifstream inFile;
+    string path = "Doc.txt";
+    HashTable machine;
+    fileWork(path, machine);
     return 0;
 }

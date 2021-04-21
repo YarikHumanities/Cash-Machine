@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 #include <ctime>
+#include <iomanip>
 #include "Node.h"
 #include "Check.h"
 using namespace std;
@@ -21,4 +22,6 @@ public:
     void resize();
     void insert(string, string, string, int);
     void Search(string, Check&, int);
+    void checkingQuant(int, string, Check&, Node*);
+
 };
