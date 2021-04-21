@@ -20,9 +20,12 @@ void printCodeForCheck()
 void interface(HashTable& CashMachine)
 {
     while (true) {
+        int k = 0;
         cout << "Hello customer!" << endl;
         Check receipt;
-        while (true) {
+        while (true) 
+        {
+            ++k;
             cout << "Enter your bar (or enter Exit): ";
             string bar;
             cin >> bar;
@@ -40,6 +43,10 @@ void interface(HashTable& CashMachine)
             CashMachine.Search(bar, receipt, n);
         }
         cout << "=========================" << endl;
+        if(k==1)
+        {
+            continue;
+        }
         receipt.print_receipt();
         printCodeForCheck();
     }
